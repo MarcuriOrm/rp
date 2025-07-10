@@ -9,26 +9,20 @@ API_KEY = os.getenv("DEEPSEEK_API_KEY")
 @app.route('/v1/chat/completions', methods=['POST'])
 def proxy():
     try:
-        # Получаем и модифицируем запрос
         payload = request.json
-        payload["safe_mode"] = False  # Отключаем фильтрацию
-        
-        # Отправляем в DeepSeek
+        if payload.get("model") == "deepseek-chat":
+            payload["safe_mode"] = False
+            
         response = requests.post(
             f"{DEEPSEEK_API}/chat/completions",
-            headers={
-                "Authorization": f"Bearer {API_KEY}",
-                "Content-Type": "application/json"
-            },
+            headers={"Authorization": f"Bearer {API_KEY}"},
             json=payload
         )
-        
-        # Возвращаем ответ Janitor AI
         return jsonify(response.json()), response.status_code
         
     except Exception as e:
         return jsonify({
-            "error": "Janitor Proxy Error",
+            "error": "Proxy error",
             "message": str(e)
         }), 500
 
