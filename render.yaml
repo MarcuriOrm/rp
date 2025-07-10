@@ -1,12 +1,12 @@
-# render.yaml
 services:
   - type: web
-    name: janitor-proxy-deepseek  # Можно изменить
+    name: deepseek-proxy-for-janitor
     env: python
-    region: frankfurt  # Самый стабильный регион
+    region: frankfurt
     plan: free
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn janitor_proxy:app
+    startCommand: gunicorn app:app  # Изменили здесь!
     envVars:
       - key: DEEPSEEK_API_KEY
-        value: sk-fd06768644384bbfab7f6a74d5f95523  # ⚠️ Замените на реальный ключ!
+        value: sk-fd06768644384bbfab7f6a74d5f95523
+        
