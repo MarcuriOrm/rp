@@ -5,7 +5,7 @@ services:
     region: frankfurt
     plan: free
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn app:app  # Изменили здесь!
+    startCommand: gunicorn app:app  # Важно: app:app вместо janitor_proxy:app
     envVars:
       - key: DEEPSEEK_API_KEY
         value: sk-fd06768644384bbfab7f6a74d5f95523
